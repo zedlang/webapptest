@@ -9,12 +9,24 @@ public class PhoneBookImpl implements PhoneBook {
 	
 	@Override
 	public void addPerson(Person newPerson) {
-		//TODO: write this method
+		this.people.add(newPerson);
 	}
 	
 	@Override
-	public Person findPerson() {
-		//TODO: write this method
+	public Person findPerson(String firstName, String lastName) {
+		for (Person aPerson : this.people ) {
+			if (aPerson.name.equals(firstName + " " + lastName)) {
+			System.out.print(aPerson.name + " " + aPerson.phoneNumber + " " + aPerson.address);
+			System.out.println();
+			}
+		}
+	}
+
+	private void printPhonebook() {
+		for (Person aPerson : this.people ) {
+			System.out.print(aPerson.name + " " + aPerson.phoneNumber + " " + aPerson.address);
+			System.out.println();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -27,5 +39,23 @@ public class PhoneBookImpl implements PhoneBook {
 		// TODO: print the phone book out to System.out
 		// TODO: find Cynthia Smith and print out just her entry
 		// TODO: insert the new person objects into the database
+
+		Person firstPerson = new Person("John Smith", "(248) 123-4567", "1234 Sand Hill Dr, Royal Oak, MI");
+		Person secondPerson = new Person("Cynthia Smith", "(824) 128-8758", "875 Main St, Ann Arbor, MI");
+
+		PhoneBookImpl myPhoneBook = new PhoneBookImpl();
+		myPhoneBook.addPerson(firstPerson);
+		myPhoneBook.addPerson(secondPerson);
+
+		//Print Phonebook contents
+		myPhoneBook.printPhonebook();
+
+		//Find Cynthis Smith
+		myPhoneBook.findPerson("Cynthia", "Smith");
+
+		//Insert new person objects into database
+		DatabaseUtil.addPersonToDB(firstPerson.name, firstPerson.phoneNumber, firstPerson.address);
+		DatabaseUtil.addPersonToDB(secondPerson.name, secondPerson.phoneNumber, secondPerson.address);
+
 	}
 }
