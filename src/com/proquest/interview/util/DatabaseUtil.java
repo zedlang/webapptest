@@ -28,4 +28,16 @@ public class DatabaseUtil {
 		Class.forName("org.hsqldb.jdbcDriver");
 		return DriverManager.getConnection("jdbc:hsqldb:mem", "sa", "");
 	}
+
+	public static void addPersonToDB(String name, String phoneNumber, String address) {
+		try {
+			Connection cn = getConnection();
+			Statement stmt = cn.createStatement();
+			stmt.execute("INSERT INTO PHONEBOOK (NAME, PHONENUMBER, ADDRESS) VALUES(name, phoneNumber, address)");
+			cn.commit();
+			cn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }
